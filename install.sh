@@ -22,6 +22,7 @@ cp -rf files/* /root
 
 echo -e '\nAdding the start script file...'
 cp -rf init.d/* /etc/init.d/
+chmod +x /etc/init.d/openhab-checker
 update-rc.d openhab-checker defaults
 
 cd /root
