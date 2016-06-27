@@ -8,4 +8,6 @@ You don't even need to clone the repository to use this script, just download th
 
 wget https://raw.githubusercontent.com/bodiroga/openhab-checker/master/install.sh
 
+sudo chmod +x install.sh
+
 sudo ./install.sh
