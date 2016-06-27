@@ -13,7 +13,7 @@ socket.setdefaulttimeout(10)
 ############################################
 ################ PARAMETERS ################
 ############################################
-service_name = "openhab-checker"
+service_name = "openhab_checker"
 current_path = "/".join(os.path.realpath(__file__).split("/")[:-1])
 configuration_file = "%s/configuration.ini" %current_path
 logfile = "/var/log/openhab-checker.log"
