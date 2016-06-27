@@ -17,12 +17,12 @@ echo -e '\nCloning the github repository...'
 git clone https://github.com/bodiroga/openhab-checker.git
 cd openhab-checker
 
+echo -e '\nMoving the program files to the /root directory...'
+cp -rf files/* /root
+
 echo -e '\nAdding the start script file...'
 cp -rf init.d/* /etc/init.d/
 update-rc.d openhab-checker defaults
-
-echo -e '\nMoving the program files to the /root directory...'
-cp -rf files/* /root
 
 cd /root
 if [ ! -f configuration.ini ]; then
