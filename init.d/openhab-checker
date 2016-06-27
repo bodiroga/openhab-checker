@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# chkconfig: 345 91 19
+# description: Startup/Shutdown openHAB-Checker
+
+# depending on parameter -- startup, shutdown, restart 
+# of the instance and listener or usage display 
+
+case "$1" in
+    start)
+        # Starting openhab-checker service
+        echo -n "Starting openhab-checker service "
+        /usr/bin/python /root/openhab-checker.py &
+        echo "OK"
+        ;;
+    status)
+        # Checking openhab-checker service status
+        echo "Checking openhab-checker service status..."
+        PID=$(ps aux | grep 'openhab-checker.py' | grep python | awk '{print $2}')
+        if ps aux | grep 'openhab-checker.py' | grep python > /dev/null 2> /dev/null; then
+           echo "Service is running"
+        else
+           echo "Service is not running"
+        fi
+        ;;
+    stop)
+        # Shutting down openhab-checker service
+        echo -n "Shutting down openhab-checker service"
+        kill -9 $(ps aux | grep 'openhab-checker.py' | awk '{print $2}') 2> /dev/null
+        echo "OK"
+        ;;
+    reload|restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 start|stop|restart|status|reload"
+        exit 1
+esac
+exit 0
