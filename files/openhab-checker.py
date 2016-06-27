@@ -293,11 +293,11 @@ def restart_openhab():
     try:
         if "zwave_checker" in enabled_services: subprocess.call("/etc/init.d/zwave_checker stop", shell=True)   
     except:
-        log("[%s] Error killing zwave_checker" %(datetime.datetime.now()))
+        log("[%s] Error killing zwave-checker" %(datetime.datetime.now()))
 
     # Kill openhab
     try:
-        log("[%s] Killing openhab" %(datetime.datetime.now()))
+        log("[%s] Killing openHAB" %(datetime.datetime.now()))
         lista_pids = get_pid("java")
         for pid in lista_pids:
             for i in range(0,3):
@@ -305,7 +305,7 @@ def restart_openhab():
                 time.sleep(2)
                 subprocess.call(command, shell=True)
     except:
-        log("[%s] Error killing openhab" %(datetime.datetime.now()))
+        log("[%s] Error killing openHAB" %(datetime.datetime.now()))
            
     # Check if zwave ports are ready
     if "socat" in enabled_services:
@@ -324,15 +324,15 @@ def restart_openhab():
 
     # Launch openhab...
     try:
-        log("[%s] Launching openhab" %(datetime.datetime.now()))
+        log("[%s] Launching openHAB" %(datetime.datetime.now()))
         command = "/etc/init.d/openhab restart"
         subprocess.call(command, shell=True)
     except:
-        log("[%s] Error launching openhab" %(datetime.datetime.now()))
+        log("[%s] Error launching openHAB" %(datetime.datetime.now()))
     time.sleep(120)
     status_ok = True
-    if "notifications" in enabled_services: send_openhab_notification_message("Openhab se ha recuperado a las %" % (datetime.datetime.now()))
-    log("[%s] Openhab correctly launched" %(datetime.datetime.now()))
+    if "notifications" in enabled_services: send_openhab_notification_message("openHAB se ha recuperado a las %s" % (datetime.datetime.now()))
+    log("[%s] openHAB correctly launched" %(datetime.datetime.now()))
 
     # Restart persistence files
     touch_persistence_files()
