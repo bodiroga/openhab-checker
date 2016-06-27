@@ -8,7 +8,7 @@ fi
 
 echo -e '\nInstalling the required programs...'
 apt-get update
-apt-get --assume-yes install git pip mosquitto
+apt-get --assume-yes install git python-pip mosquitto
 pip install paho-mqtt
 
 cd /tmp
