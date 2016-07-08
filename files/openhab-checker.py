@@ -36,7 +36,6 @@ def read_configuration():
             if "," in value: value = value.split(",")
             if variable[-4:] == "path" and value[-1:] != "/": value = value+"/"
             global_variables[final_variable] = value
-    print global_variables
 
 def update_configuration(section, parameter, new_value):
     config = ConfigParser()
