@@ -34,7 +34,9 @@ def read_configuration():
         for (variable, value) in config.items(section):
             final_variable = section+"_"+variable
             if "," in value: value = value.split(",")
+            if variable[-4:] == "path" and value[-1:] != "/": value = value+"/"
             global_variables[final_variable] = value
+    print global_variables
 
 def update_configuration(section, parameter, new_value):
     config = ConfigParser()
@@ -79,7 +81,7 @@ def get_pid(name):
 def get_uninitialized_zwave_ports():
     uninitialized_ports = []
     for zwave in global_variables[service_name+"_zwave_ports"]:
-        path = global_variables[service_name+"_socat_log_path"] + zwave
+        path = global_variables[service_name+"_zwave_ports_path"] + zwave
         if not os.path.exists(path):
             uninitialized_ports.append(zwave)
     return uninitialized_ports
@@ -114,7 +116,7 @@ def log(what):
 
 def touch_persistence_files():
     try:
-        persistence_folder = global_variables["global_openhab_path"] + "/configurations/persistence/"
+        persistence_folder = global_variables["global_openhab_path"] + "configurations/persistence/"
         for persistence_file in os.listdir(persistence_folder):
             if persistence_file.lower().endswith('.persist'):
                 persistence_file_path = persistence_folder+persistence_file
@@ -223,7 +225,7 @@ def check_socat_log_files():
         bundles_info = telnet.getZwaveBundlesInfo()
         info = bundles_info
         for socat_log in global_variables[service_name+"_socat_log_files"]:
-            socat_log_path = global_variables[service_name+"_zwave_ports_path"]+socat_log
+            socat_log_path = global_variables[service_name+"_socat_log_path"] + socat_log
             file_content = read_socat_log_file(socat_log_path)
             corresponding_zwave = file_content["zwave_binding"]
             for key, value in file_content.iteritems():
@@ -237,7 +239,7 @@ def check_socat_log_files():
     while status_ok:
         try:
             for socat_log in global_variables[service_name+"_socat_log_files"]:
-                socat_log_path = global_variables[service_name+"_zwave_ports_path"]+socat_log
+                socat_log_path = global_variables[service_name+"_socat_log_path"] + socat_log
                 file_time = datetime.datetime.fromtimestamp(os.path.getmtime(socat_log_path))
                 now_time = datetime.datetime.now()
                 file_content = read_socat_log_file(socat_log_path)
